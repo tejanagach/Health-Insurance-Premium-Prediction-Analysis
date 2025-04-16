@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insurance Premium Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #e3f2fd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 700px;
+        }
+        .result-card {
+            border-radius: 20px;
+            padding: 30px;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #0d6efd;
+        }
+        .premium-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        .btn-custom {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-custom:hover {
+            background-color: #0b5ed7;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="text-center mb-4">
+        <h2 class="text-primary">🏥 Your Insurance Premium Result</h2>
+    </div>
+
+    <div class="result-card">
+        <h4 class="mb-3">Selected Plan: <span class="text-info">{{ selected_plan }}</span></h4>
+
+        <div class="mb-4">
+            <p class="mb-1 fw-semibold">Predicted Premium:</p>
+            <div class="premium-amount">₹{{ predicted_premium }}</div>
+        </div>
+
+        {% if recommendation %}
+        <div class="alert alert-warning rounded-3">
+            <h5 class="fw-bold">{{ recommendation.Status }}</h5>
+            <p>{{ recommendation.Message }}</p>
+            {% if recommendation.SuggestedUpgrade %}
+                <strong>💰 Extra to Pay:</strong> ₹{{ recommendation.ExtraToPay }}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if discount %}
+        <div class="alert alert-success rounded-3">
+            <h5 class="fw-bold">{{ discount.Action }}</h5>
+            <p>{{ discount.Message }}</p>
+            <strong>💡 Suggested Premium:</strong> ₹{{ discount.SuggestedPremium }}
+        </div>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="/predict" class="btn btn-custom">Predict Another Premium</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
